@@ -1,0 +1,28 @@
+{% load compress %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block "title" %}{% endblock %}</title>
+        {% compress css %}
+            <link rel="stylesheet" type="text/less" href="/static/css/bootstrap.less" />
+            <link rel="stylesheet" type="text/less" href="/static/css/base.less" />
+        {% endcompress %}
+    </head>
+    <body>
+        <div class="container">
+            <!--<div class="topbar" data-scrollspy="scrollspy">-->
+            <!--    <div class="topbar-inner">-->
+            <!--        <div class="container">-->
+            <!--            <a class="brand" href="/">Zoe Striemer</a>-->
+            <!--            <ul class="nav">-->
+            <!--                <li{% if request.path == "/pages/wedding-photos/" %} class="active"{% endif %}><a href="/pages/wedding-photos/">Wedding Photos</a></li>-->
+            <!--                <li{% if request.path == "/pages/ultrasound-photos/" %} class="active"{% endif %}><a href="/pages/ultrasound-photos/">Ultrasound Photos</a></li>-->
+            <!--            </ul>-->
+            <!--        </div>-->
+            <!--    </div>-->
+            <!--</div>-->
+            {% block "content" %}{% endblock %}
+        </div>
+    </body>
+</html>
