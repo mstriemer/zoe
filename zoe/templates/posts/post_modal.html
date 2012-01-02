@@ -1,0 +1,30 @@
+{% load thumbnail %}
+
+<div id="modal-post-{{ post.pk }}" class="modal hide">
+    <div class="modal-header">
+        <a href="#" class="close">×</a>
+        <h2>{{ post }}</h2>
+    </div>
+    <div class="modal-body">
+        <ul class="media-grid">
+            {% for prev, curr, next, photo in photos %}
+                {% thumbnail photo.image "560x390" as image %}
+                <li id="post-{{ post.pk }}-photo-{{ photo.pk }}" class="post-{{ post.pk }}-photo" data-prev="{{ prev.pk }}" data-next="{{ next.pk }}" style="display:none;"><a href="#"><img class="thumbnail" src="{{ image.url }}"></a></li>
+                {% endthumbnail %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <div class="pagination">
+            <ul>
+                {% for prev, curr, next, photo in photos %}
+                    {% if forloop.first %}<li id="post-{{ post.pk }}-photo-previous-link" class="prev"><a href="#" class="post-photo-link" data-post="{{ post.pk }}">Previous</a></li>{% endif %}
+                    <li id="post-{{ post.pk }}-photo-{{ photo.pk }}-link" class="post-{{ post.pk }}-photo-link">
+                        <a href="#" class="post-photo-link" data-post="{{ post.pk }}" data-photo="{{ photo.pk }}">{{ curr }}</a>
+                    </li>
+                    {% if forloop.last %}<li id="post-{{ post.pk }}-photo-next-link" class="next"><a href="#" class="post-photo-link" data-post="{{ post.pk }}">Next</a></li>{% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

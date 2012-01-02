@@ -1,8 +1,18 @@
 {% extends "base.html" %}
+{% load thumbnail %}
 
 {% block "title" %}{{ post.title }}{% endblock %}
 
 {% block "content" %}
-<h1>{{ post }}</h1>
-<p>{{ post.content|safe }}</p>
+    <div class="post">
+        <h1>{{ post }}</h1>
+        <p>{{ post.content|safe }}</p>
+        <ul class="media-grid">
+            {% for photo in post.photos.all %}
+                {% thumbnail photo.image "210x150" as image %}
+                    <li><a href="#"><img class="thumbnail" src="{{ image.url }}"></a></li>
+                {% endthumbnail %}
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

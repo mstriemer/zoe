@@ -7,13 +7,14 @@ Replace this with more appropriate tests for your application.
 from datetime import datetime
 
 from django.test import TestCase
+from django.test.client import Client
 
-from posts.models import Post
+from posts.models import Post, Photo
 
 
 class PostTest(TestCase):
     def test_unicode(self):
-        self.assertEqual(u'My Post', unicode(Post(title='My Post')))
+        assert u'My Post' == unicode(Post(title='My Post'))
 
     def test_date_created(self):
         now = datetime.now()
@@ -28,3 +29,25 @@ class PostTest(TestCase):
 
     def make_post(title='Post', slug='post', **kwargs):
         return Post.objects.create(title=title, slug=slug, **kwargs)
+
+class PostViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_detail(self):
+        post = self.make_post()
+        response = self.client.get('/posts/post/')
+        assert post == response.context['post']
+        assert 200 == response.status_code
+        assert 'posts/post_detail.html' == response.templates[0].name
+
+    def make_post(self, title='Post', slug='post', **kwargs):
+        return Post.objects.create(title=title, slug=slug, **kwargs)
+
+
+class PhotoTest(TestCase):
+    fixtures = ['posts.json', 'photos.json']
+
+    def test_photo(self):
+        # photo = Photo.objects.get(pk=1)
+        pass

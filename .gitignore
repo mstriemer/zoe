@@ -3,3 +3,4 @@ zoe/staticfiles
 *.pyc
 .DS_Store
 *.db
+zoe/media

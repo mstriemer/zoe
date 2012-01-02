@@ -77,6 +77,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     root_path('static'),
+    root_path('posts/static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -137,6 +138,7 @@ INSTALLED_APPS = (
     'south',
     'posts',
     'compressor',
+    'sorl.thumbnail',
 )
 
 # A sample logging configuration. The only tangible logging

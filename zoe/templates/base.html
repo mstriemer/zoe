@@ -5,8 +5,17 @@
     <head>
         <title>{% block "title" %}{% endblock %}</title>
         {% compress css %}
-            <link rel="stylesheet" type="text/less" href="/static/css/bootstrap.less" />
-            <link rel="stylesheet" type="text/less" href="/static/css/base.less" />
+            <link rel="stylesheet" type="text/less" href="/static/css/bootstrap.less">
+            <link rel="stylesheet" type="text/less" href="/static/css/base.less">
+        {% endcompress %}
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        {% compress js %}
+            <script type="text/javascript" src="/static/js/bootstrap-modal.js"></script>
+            <script type="text/javascript" src="/static/js/bootstrap-twipsy.js"></script>
+            <script type="text/javascript" src="/static/js/bootstrap-popover.js"></script>
+        {% endcompress %}
+        {% compress js %}
+            <script type="text/coffeescript" src="/static/js/posts.coffee"></script>
         {% endcompress %}
     </head>
     <body>
