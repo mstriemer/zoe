@@ -136,9 +136,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'south',
-    'posts',
     'compressor',
     'sorl.thumbnail',
+    'posts',
 )
 
 # A sample logging configuration. The only tangible logging
