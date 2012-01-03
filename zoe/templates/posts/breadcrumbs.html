@@ -1,0 +1,12 @@
+<ul class="breadcrumb">
+    {% for title, link in links %}
+        <li{% if forloop.last %} class="active"{% endif %}>
+            {% if link %}
+                <a href="{{ link }}">{{ title }}</a>
+            {% else %}
+                {{ title }}
+            {% endif %}
+        </li>
+        {% if not forloop.last %}<span class="divider">/</span>{% endif %}
+    {% endfor %}
+</ul>

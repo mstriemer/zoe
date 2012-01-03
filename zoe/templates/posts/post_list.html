@@ -1,22 +1,11 @@
 {% extends "base.html" %}
-{% load thumbnail %}
 {% load posts %}
 
 {% block "content" %}
+    {% breadcrumbs %}
     <div class="modal-backdrop fade in hide"></div>
     {% for post in posts %}
-        <div class="post">
-            <h1>{{ post }}</h1>
-            <p>{{ post.content|safe }}</p>
-            <ul class="media-grid">
-                {% for photo in post.photos.all %}
-                    {% thumbnail photo.image "210x150" as image %}
-                        <li><a href="#" class="post-photo-link" data-post="{{ post.pk }}" data-photo="{{ photo.pk }}" data-placement="below" rel="twipsy" title="{{ photo.caption }}" data-controls-modal="modal-post-{{ post.pk }}" data-backdrop="true" data-keyboard="true"><img class="thumbnail" src="{{ image.url }}"></a></li>
-                    {% endthumbnail %}
-                {% endfor %}
-            </ul>
-        </div>
-        {% post_modal post %}
+        {% include "posts/post.html" %}
     {% endfor %}
     <script type="text/javascript">
         $(function() {

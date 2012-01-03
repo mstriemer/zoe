@@ -3,13 +3,22 @@ from django.db import models
 from datetime import datetime
 
 
+class PublishedPostManager(models.Manager):
+    def get_query_set(self):
+        return super(PublishedPostManager, self).get_query_set().exclude(
+                date_published=None).order_by('-date_published', 'id')
+
+
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     content = models.TextField()
     date_created = models.DateTimeField(default=datetime.now, editable=False)
-    date_published = models.DateTimeField(null=True, editable=False)
+    date_published = models.DateTimeField(null=True, blank=True)
     date_updated = models.DateTimeField(editable=False)
+
+    objects = models.Manager()
+    published = PublishedPostManager()
 
     def __unicode__(self):
         return self.title
