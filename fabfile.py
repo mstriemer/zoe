@@ -3,7 +3,7 @@ from datetime import datetime
 
 from fabric.api import local, run, env, cd, sudo
 
-env.hosts = ['deploy@striemer.ca']
+env.hosts = ['mark@striemer.ca']
 
 options = {
     'app_name': 'zoe',
@@ -55,4 +55,3 @@ def deploy(branch=None, expand_target=None):
         expand()
     else:
         expand(expand_target)
-    reload_apache()
