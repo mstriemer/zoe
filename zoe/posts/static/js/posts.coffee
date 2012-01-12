@@ -31,6 +31,7 @@ jQuery ->
         else
             $next_link.addClass 'disabled'
             ($ 'a', $next_link).removeClass 'post-photo-link'
+        false
 
     ($ '.post-photo-link').click ->
         show_photo this
