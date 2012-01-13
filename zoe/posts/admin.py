@@ -1,8 +1,10 @@
 from django.contrib import admin
 
+from sorl.thumbnail.admin import AdminImageMixin
+
 from posts.models import Post, Photo
 
-class InlinePhotoAdmin(admin.TabularInline):
+class InlinePhotoAdmin(AdminImageMixin, admin.TabularInline):
     model = Photo
 
 class PostAdmin(admin.ModelAdmin):

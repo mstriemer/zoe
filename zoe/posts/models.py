@@ -1,6 +1,8 @@
+from datetime import datetime
+
 from django.db import models
 
-from datetime import datetime
+from sorl.thumbnail import ImageField, get_thumbnail
 
 
 class PublishedPostManager(models.Manager):
@@ -29,7 +31,7 @@ class Post(models.Model):
 
 
 class Photo(models.Model):
-    image = models.ImageField(upload_to='photos')
+    image = ImageField(upload_to='photos')
     caption = models.CharField(max_length=255)
     post = models.ForeignKey('Post', related_name='photos')
     date_created = models.DateTimeField(default=datetime.now, editable=False)
@@ -41,3 +43,5 @@ class Photo(models.Model):
     def save(self, *args, **kwargs):
         self.date_updated = datetime.now()
         super(Photo, self).save(*args, **kwargs)
+        for size in ('210x150', '560x390'):
+            get_thumbnail(self.image, size)
