@@ -17,3 +17,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'zoe.settings'
 
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
+
+# Setup Celery
+os.environ["CELERY_LOADER"] = "django"
