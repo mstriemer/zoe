@@ -11,7 +11,7 @@
                 {% thumbnail photo.image "560x390" as image %}
                     <li id="post-{{ post.pk }}-photo-{{ photo.pk }}" class="post-{{ post.pk }}-photo" data-prev="{{ prev.pk }}" data-next="{{ next.pk }}" style="display:none;">
                         <p class="clearfix" style="padding-left: 20px;">{{ photo.caption }}</p>
-                        <a href="#"><img class="thumbnail" src="{{ image.url }}"></a>
+                        <a href="{{ photo.image.url }}"><img class="thumbnail" src="{{ image.url }}"></a>
                     </li>
                 {% endthumbnail %}
             {% endfor %}
