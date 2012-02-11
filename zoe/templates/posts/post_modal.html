@@ -2,13 +2,13 @@
 
 <div id="modal-post-{{ post.pk }}" class="modal hide">
     <div class="modal-header">
-        <a href="#" class="close">×</a>
-        <h2>{{ post }}</h2>
+        <a href="#" class="close">&times;</a>
+        <h3>{{ post }}</h3>
     </div>
     <div class="modal-body">
         <ul class="media-grid">
             {% for prev, curr, next, photo in photos %}
-                {% thumbnail photo.image "560x390" as image %}
+                {% thumbnail photo.image "520x360" as image %}
                     <li id="post-{{ post.pk }}-photo-{{ photo.pk }}" class="post-{{ post.pk }}-photo" data-prev="{{ prev.pk }}" data-next="{{ next.pk }}" style="display:none;">
                         <p class="clearfix" style="padding-left: 20px;">{{ photo.caption }}</p>
                         <a href="{{ photo.image.url }}"><img class="thumbnail" src="{{ image.url }}"></a>

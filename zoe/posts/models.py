@@ -43,5 +43,5 @@ class Photo(models.Model):
     def save(self, *args, **kwargs):
         self.date_updated = datetime.now()
         super(Photo, self).save(*args, **kwargs)
-        for size in ('210x150', '560x390'):
+        for size in ('x150', '520x360'):
             get_thumbnail(self.image, size)
