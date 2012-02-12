@@ -1,7 +1,9 @@
+from zipfile import ZipFile
+import os
 from datetime import datetime
 
 from django.db import models
-
+from django.conf import settings
 from sorl.thumbnail import ImageField, get_thumbnail
 
 
@@ -28,6 +30,27 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.date_updated = datetime.now()
         super(Post, self).save(*args, **kwargs)
+        self._create_archive()
+
+    @property
+    def archive_path(self):
+        return '{0}posts/archive/{1}.zip'.format(settings.MEDIA_ROOT, self.slug)
+
+    @property
+    def archive_url(self):
+        return '{0}posts/archive/{1}.zip'.format(settings.MEDIA_URL, self.slug)
+
+    @property
+    def archive_size(self):
+        if os.path.exists(self.archive_path):
+            return os.stat(self.archive_path).st_size
+        else:
+            return None
+
+    def _create_archive(self):
+        with ZipFile(self.archive_path, 'w') as postzip:
+            for photo in self.photos.all():
+                postzip.write(photo.image.path, os.path.basename(photo.image.name))
 
 
 class Photo(models.Model):

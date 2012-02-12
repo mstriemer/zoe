@@ -2,7 +2,10 @@
 {% load posts %}
 
 <div class="post">
-    <h1><a href="{% url posts.views.post_detail slug=post.slug %}">{{ post }}</a> <small title="{{ post.date_published }}">{{ post.date_published|timesince }} ago</small></h1>
+    <div class="post-header">
+        <h1><a href="{% url posts.views.post_detail slug=post.slug %}">{{ post }}</a> <small title="{{ post.date_published }}">{{ post.date_published|timesince }} ago</small></h1>
+        <a class="btn small post-download" href="{{ post.archive_url }}">Download All Photos ({{ post.archive_size|filesizeformat }})</a>
+    </div>
     <p>{{ post.content|safe }}</p>
     <ul class="media-grid">
         {% for photo in post.photos.all %}
