@@ -1,6 +1,6 @@
 import os
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 root_path = lambda p: os.path.join(PROJECT_ROOT, p)
 

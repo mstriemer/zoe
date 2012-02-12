@@ -4,3 +4,4 @@ zoe/staticfiles
 .DS_Store
 *.db
 zoe/media
+zoe/settings/local.py
