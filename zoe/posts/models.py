@@ -68,3 +68,4 @@ class Photo(models.Model):
         super(Photo, self).save(*args, **kwargs)
         for size in ('x150', '520x360'):
             get_thumbnail(self.image, size)
+        self.post._create_archive()
