@@ -1,36 +1,48 @@
 jQuery ->
-    show_photo = (el) ->
-        $el = ($ el)
-        return unless $el.hasClass 'post-photo-link'
-        for photo in ($ ".post-#{$el.data 'post'}-photo")
-            $photo = ($ photo)
-            if photo.id == "post-#{$el.data 'post'}-photo-#{$el.data 'photo'}"
-                $photo.show()
-                prev = $photo.data 'prev'
-                next = $photo.data 'next'
-            else
-                $photo.hide()
-        for link in ($ ".post-#{$el.data 'post'}-photo-link")
-            if link.id == "post-#{$el.data 'post'}-photo-#{$el.data 'photo'}-link"
-                ($ link).addClass 'active'
-            else
-                ($ link).removeClass 'active'
-        $prev_link = ($ "#post-#{$el.data 'post'}-photo-previous-link")
-        $next_link = ($ "#post-#{$el.data 'post'}-photo-next-link")
-        ($ 'a', $prev_link).data 'photo', prev
-        ($ 'a', $next_link).data 'photo', next
-        if prev
-            $prev_link.removeClass 'disabled'
-            ($ 'a', $prev_link).addClass 'post-photo-link'
-        else
-            $prev_link.addClass 'disabled'
-            ($ 'a', $prev_link).removeClass 'post-photo-link'
-        if next
-            $next_link.removeClass 'disabled'
-            ($ 'a', $next_link).addClass 'post-photo-link'
-        else
-            $next_link.addClass 'disabled'
-            ($ 'a', $next_link).removeClass 'post-photo-link'
-
     ($ '.post-photo-link').click ->
-        show_photo this
+        findPost = (post_id) ->
+            for post in posts
+                if post.id == post_id
+                    return post
+
+        findPhotoWithIndex = (photo_id) ->
+            for photo, i in post.photos
+                if photo.id == photo_id
+                    return [photo, i]
+
+        $this = ($ this)
+        [post_id, photo_id] = [($this.data 'post'), ($this.data 'photo')]
+        post = findPost post_id
+        [photo, photo_index] = findPhotoWithIndex photo_id
+
+        $modal = ($ (templates.post_modal.render post, photo_modal: templates.photo_modal))
+        $modal.bind 'hide', ->
+            $modal.remove()
+        $modal.show_photo = ->
+            ($modal.find 'ul.media-grid li').addClass 'hide'
+            selected_photo = post.photos[photo_index]
+            ($ "#photo-modal-#{selected_photo.id}").removeClass 'hide'
+            ($modal.find '.index-text').text "#{photo_index + 1} of #{post.photos.length}"
+            if photo_index + 1 == post.photos.length
+                ($ "#post-modal-#{post.id}-next").addClass 'disabled'
+            else
+                ($ "#post-modal-#{post.id}-next").removeClass 'disabled'
+            if photo_index == 0
+                ($ "#post-modal-#{post.id}-prev").addClass 'disabled'
+            else
+                ($ "#post-modal-#{post.id}-prev").removeClass 'disabled'
+
+        $modal.modal keyboard: true, backdrop: true, show: true
+        ($ "#post-modal-#{post.id}-next").click ->
+            if photo_index + 1 < post.photos.length
+                photo_index += 1
+                $modal.show_photo()
+        ($ "#post-modal-#{post.id}-prev").click ->
+            if photo_index > 0
+                photo_index -= 1
+                $modal.show_photo()
+
+        $modal.show_photo()
+        ($ '.container').append $modal
+
+        false

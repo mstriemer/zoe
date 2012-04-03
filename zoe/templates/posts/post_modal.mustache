@@ -1,0 +1,18 @@
+<div class="modal">
+    <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <ul class="media-grid">
+            {{#photos}}
+                {{> photo_modal}}
+            {{/photos}}
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#" id="post-modal-{{id}}-next" class="btn primary">Next</a>
+        <a href="#" id="post-modal-{{id}}-prev" class="btn">Previous</a>
+        <span class="index-text"></span>
+    </div>
+</div>
