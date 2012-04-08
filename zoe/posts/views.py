@@ -4,11 +4,11 @@ from django.core.paginator import Paginator
 from posts.models import Post
 
 def post_detail(request, slug):
-    post = get_object_or_404(Post, slug=slug)
+    post = get_object_or_404(Post.objects.published(), slug=slug)
     return render_to_response('posts/post_detail.html', {'post': post})
 
 def post_list(request):
-    post_list = Post.published.all()
+    post_list = Post.objects.published()
     pages = Paginator(post_list, 5)
     try:
         page = pages.page(request.GET.get('page', 1))
