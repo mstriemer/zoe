@@ -61,4 +61,4 @@ def _serialize_photo(photo):
 def recent_posts():
     return ''.join("<li><a href=\"{url}\">{post}</a></li>".format(post=post,
         url=reverse('zoe.posts.views.post_detail', kwargs={'slug': post.slug}))
-        for post in Post.published.order_by('-date_published')[:10])
+        for post in Post.objects.published().order_by('-date_published')[:10])

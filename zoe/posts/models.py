@@ -8,9 +8,9 @@ from sorl.thumbnail import ImageField, get_thumbnail
 
 
 class PublishedPostManager(models.Manager):
-    def get_query_set(self):
-        return super(PublishedPostManager, self).get_query_set().exclude(
-                date_published=None).order_by('-date_published', 'id')
+    def published(self):
+        return self.exclude(date_published=None).order_by('-date_published',
+                'id')
 
 
 class Post(models.Model):
@@ -21,8 +21,7 @@ class Post(models.Model):
     date_published = models.DateTimeField(null=True, blank=True)
     date_updated = models.DateTimeField(editable=False)
 
-    objects = models.Manager()
-    published = PublishedPostManager()
+    objects = PublishedPostManager()
 
     def __unicode__(self):
         return self.title
