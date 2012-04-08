@@ -28,6 +28,10 @@ def breadcrumbs(post=None):
                                     kwargs={'slug': post.slug})))
     return {'links': links}
 
+@register.inclusion_tag('posts/paginate.html')
+def paginate(page):
+    return {'page': page}
+
 @register.simple_tag
 def to_json(posts):
     if isinstance(posts, Post):
@@ -52,3 +56,9 @@ def _serialize_photo(photo):
         'height': thumbnail.height,
         'width': thumbnail.width
     }
+
+@register.simple_tag
+def recent_posts():
+    return ''.join("<li><a href=\"{url}\">{post}</a></li>".format(post=post,
+        url=reverse('zoe.posts.views.post_detail', kwargs={'slug': post.slug}))
+        for post in Post.objects.order_by('-date_published')[:5])

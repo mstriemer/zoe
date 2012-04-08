@@ -1,12 +1,21 @@
 from django.shortcuts import get_object_or_404, render_to_response
+from django.core.paginator import Paginator
 
 from posts.models import Post
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    posts = Post.published.all()
-    return render_to_response('posts/post_detail.html', {'post': post, 'posts': posts})
+    return render_to_response('posts/post_detail.html', {'post': post})
 
 def post_list(request):
-    posts = Post.published.all()
-    return render_to_response('posts/post_list.html', {'posts': posts})
+    post_list = Post.published.all()
+    pages = Paginator(post_list, 5)
+    try:
+        page = pages.page(request.GET.get('page', 1))
+    except PageNotAnInteger:
+        page = pages.page(1)
+    except EmptyPage:
+        page = pages.page(pages.num_pages)
+    posts = page.object_list
+    return render_to_response('posts/post_list.html', {'posts': posts,
+        'page': page})

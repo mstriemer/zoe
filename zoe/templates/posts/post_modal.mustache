@@ -11,8 +11,12 @@
         </ul>
     </div>
     <div class="modal-footer">
-        <a href="#" id="post-modal-{{id}}-next" class="btn primary">Next</a>
-        <a href="#" id="post-modal-{{id}}-prev" class="btn">Previous</a>
-        <span class="index-text"></span>
+        <div class="pagination center">
+            <ul>
+                <li id="post-modal-{{id}}-prev" class="prev"><a href="#">Previous</a></li>
+                <li class="disabled"><a href="#" class="index-text"></a></li>
+                <li id="post-modal-{{id}}-next" class="next"><a href="#">Next</a></li>
+            </ul>
+        </div>
     </div>
 </div>

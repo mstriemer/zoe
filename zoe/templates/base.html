@@ -1,4 +1,5 @@
 {% load compress %}
+{% load posts %}
 
 <!DOCTYPE html>
 <html>
@@ -26,9 +27,7 @@
                 <div class="span4" id="sidebar">
                     <h3>Recent Posts</h3>
                     <ul class="unstyled">
-                        {% for post in posts %}
-                            <li><a href="{% url posts.views.post_detail slug=post.slug %}">{{ post }}</a></li>
-                        {% endfor %}
+                        {% recent_posts %}
                     </ul>
                 </div>
                 <div class="span12" id="content">
