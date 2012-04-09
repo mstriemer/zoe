@@ -6,11 +6,12 @@ from fabric.api import run, env, cd, sudo, settings
 env.hosts = ['mark@striemer.ca']
 env.app_name = 'zoe'
 env.repo_name = 'repo'
-env.root_dir = '/var/apps/zoe'
+env.root_dir = os.path.join('/var/apps', env.app_name)
 env.repo_dir = os.path.join(env.root_dir, env.repo_name)
 env.shared_settings = os.path.join(env.root_dir, 'shared/settings/local.py')
 env.local_settings = os.path.join(env.repo_dir, env.app_name,
         'settings/local.py')
+env.environment_dir = os.path.join('/var/apps/environments', env.app_name)
 env.branch_name = 'master'
 
 def update_repo():
@@ -32,9 +33,15 @@ def update_symlinks():
         with cd(os.path.dirname(env.local_settings)):
             run('ln -s {shared_settings}'.format(**env))
 
+def update_packages():
+    run('pip install -r {requirements} -E {environment}'.format(
+            requirements=os.path.join(env.repo_dir, 'requirements.txt'),
+            environment=env.environment_dir))
+
 def deploy(branch='master'):
     env.branch_name = branch
     update_repo()
+    update_packages()
     update_symlinks()
     restart_app()
 
