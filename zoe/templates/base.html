@@ -32,6 +32,7 @@
                 </div>
                 <div class="span12" id="content">
                     {% block "content" %}{% endblock %}
+                    {% include 'posts/paginate.html' with paginator=paginator page_obj=page_obj only %}
                 </div>
             </div>
         </div>
