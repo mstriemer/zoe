@@ -28,10 +28,6 @@ def breadcrumbs(post=None):
                                     kwargs={'slug': post.slug})))
     return {'links': links}
 
-@register.inclusion_tag('posts/paginate.html')
-def paginate(page):
-    return {'page': page}
-
 @register.simple_tag
 def to_json(posts):
     if isinstance(posts, Post):

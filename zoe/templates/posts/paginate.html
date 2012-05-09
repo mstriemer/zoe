@@ -1,7 +1,9 @@
+{% if paginator %}
 <div class="pagination center">
     <ul>
-        <li class="prev{% if not page.has_previous %} disabled{% endif %}"><a href="?page={{ page.previous_page_number }}">Previous</a></li>
-        <li class="disabled"><a>Page {{ page.number }} of {{ page.paginator.num_pages }}</a></li>
-        <li class="next{% if not page.has_next %} disabled{% endif %}"><a href="?page={{ page.next_page_number }}">Next</a></li>
+        <li class="prev{% if not page_obj.has_previous %} disabled{% endif %}"><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        <li class="disabled"><a>Page {{ page_obj.number }} of {{ paginator.num_pages }}</a></li>
+        <li class="next{% if not page_obj.has_next %} disabled{% endif %}"><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
     </ul>
 </div>
+{% endif %}
